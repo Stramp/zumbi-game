@@ -17,14 +17,20 @@ public class ZumbiBehaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-
+        direction = (target.transform.position - transform.position).normalized * speed * Time.deltaTime;
         distaceForAttack = Vector3.Distance(target.transform.position, transform.position);
+        Quaternion rotation = Quaternion.LookRotation(target.transform.position - transform.position);
+        GetComponent<Rigidbody>().MoveRotation(rotation);
         if (distaceForAttack > 2.5f){
-            direction = (target.transform.position - transform.position).normalized * speed * Time.deltaTime;
-            GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + direction);
-            Quaternion rotation = Quaternion.LookRotation(target.transform.position - transform.position);
-            GetComponent<Rigidbody>().MoveRotation(rotation);
+            GetComponent<Rigidbody>().MovePosition(GetComponent<Rigidbody>().position + direction);    
+            GetComponent<Animator>().SetBool("Attacking", false);
+            return;
         }
+        GetComponent<Animator>().SetBool("Attacking", true);
+    }
+
+    void AttackHit(){
+        Time.timeScale = 0;
+        target.GetComponent<PlayerController>().TakeDamage(1);
     }
 }

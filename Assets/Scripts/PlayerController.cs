@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject UIText;
+    public bool isLive = true;
     public Animator animator;
     public GameObject cam;
     public float speed = 10f;
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         speed2 = speed;
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
@@ -31,9 +35,10 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(KeyCode.S)){
             speed = speed2 - (slowTax * speed2);
         }
-        if(Input.GetButtonDown("Fire1") && Input.GetMouseButton(1)){
-                this.shooter();
-            }
+        if(Input.GetMouseButton(0)){
+            if(isLive && Input.GetMouseButton(1)) this.shooter();
+            else if(!isLive)SceneManager.LoadScene("SampleScene");
+        }
         
     }
     void FixedUpdate()
@@ -68,5 +73,10 @@ public class PlayerController : MonoBehaviour
     }
     void shooter(){
         Instantiate(bullet, aim.transform.position, aim.transform.rotation);
+    }
+
+    public void TakeDamage(float damage){
+        UIText.SetActive(true);
+        isLive = false;
     }
 }
