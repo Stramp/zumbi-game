@@ -2501,7 +2501,7 @@ GameObject:
   - component: {fileID: 2000171557}
   m_Layer: 0
   m_Name: Personagens
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2604,12 +2604,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84f4be28f0720c4cac5c3808e8e6619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UITextGameOver: {fileID: 0}
+  isLive: 1
   animator: {fileID: 2000171561}
   cam: {fileID: 0}
-  speed: 10
+  speed: 5
   slowTax: 0.3
   bullet: {fileID: 4863795138310817258, guid: 19575d8feff1ddf4d95829b76a090429, type: 3}
   aim: {fileID: 4128584144424906578}
+  maxHealth: 30
+  Health: 30
+  controllerUI: {fileID: 0}
 --- !u!1 &1938851689004064
 GameObject:
   m_ObjectHideFlags: 0

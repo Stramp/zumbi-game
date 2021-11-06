@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject UIText;
+    public GameObject UITextGameOver;
     public bool isLive = true;
     public Animator animator;
     public GameObject cam;
@@ -18,10 +18,14 @@ public class PlayerController : MonoBehaviour
     Vector3 direction;
     float eixoX ;
     float eixoZ ;
+    public int maxHealth = 30;
+    public int Health;
+    public ControllerUI controllerUI;
     void Start()
     {
         speed2 = speed;
         Time.timeScale = 1;
+        Health = maxHealth;
     }
 
     // Update is called once per frame
@@ -75,8 +79,13 @@ public class PlayerController : MonoBehaviour
         Instantiate(bullet, aim.transform.position, aim.transform.rotation);
     }
 
-    public void TakeDamage(float damage){
-        UIText.SetActive(true);
-        isLive = false;
+    public void TakeDamage(int damage){
+        Health -= damage;
+        controllerUI.UpdateHealth(Health);
+        if(Health <=0){
+            Time.timeScale = 0;
+            UITextGameOver.SetActive(true);
+            isLive = false;
+        }
     }
 }
